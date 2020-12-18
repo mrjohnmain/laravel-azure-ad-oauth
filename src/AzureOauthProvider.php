@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Laravel\Socialite\Two\User;
 use Laravel\Socialite\Two\AbstractProvider;
 use Laravel\Socialite\Two\ProviderInterface;
+use Laravel\Socialite\Two\InvalidStateException;
 
 class AzureOauthProvider extends AbstractProvider implements ProviderInterface
 {
@@ -15,12 +16,12 @@ class AzureOauthProvider extends AbstractProvider implements ProviderInterface
 
     protected function getAuthUrl($state)
     {
-        return $this->buildAuthUrlFromBase('https://login.microsoftonline.com/common/oauth2/authorize', $state);
+        return $this->buildAuthUrlFromBase(config('azure-oath.url.token'), $state);
     }
 
     protected function getTokenUrl()
     {
-        return 'https://login.microsoftonline.com/common/oauth2/token';
+        return config('azure-oath.url.token');
     }
 
     protected function getTokenFields($code)
